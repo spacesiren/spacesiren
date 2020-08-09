@@ -1,0 +1,6 @@
+.idea/
+.terraform/
+functions-pkg/
+venv/
+terraform.tfvars
+terraform-backend.tf

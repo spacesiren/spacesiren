@@ -1,0 +1,13 @@
+cloudtrail_bucket = "mycompany-spacesiren-cloudtrail"
+functions_bucket  = "mycompany-spacesiren-functions"
+
+dns_zone_name = "spacesiren.example.com"
+
+alert_cooldown = 1800
+
+alert_email_from_user  = "alerts"
+alert_email_to_address = "security@example.com"
+
+default_tags = {
+  AppName = "SpaceSiren"
+}

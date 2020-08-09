@@ -1,0 +1,21 @@
+# Backend configuration is optional, but highly recommended.
+#   1. Create a new S3 bucket in your SpaceSiren account in the us-east-1 region
+#      for the backend state and copy its name into the "bucket" config below.
+#   2. Create a new DynamoDB table in your SpaceSiren account in the us-east-1 region
+#      with table name "spacesiren-terraform-lock" and primary key "LockID". All other
+#      parameters on table creation are optional, but you shouldn't need more than 1
+#      provisioned capacity for read and write. On-demand will also work and shouldn't
+#      incur any measurable cost.
+#   3. Copy this file to "terraform-backend.tf" from its current directory and run
+#      "terraform init".
+
+terraform {
+  backend "s3" {
+    profile        = "spacesiren"
+    region         = "us-east-1"
+    bucket         = "mycompany-spacesiren-terraform-states"
+    key            = "spacesiren.tfstate"
+    encrypt        = "true"
+    dynamodb_table = "spacesiren-terraform-lock"
+  }
+}
