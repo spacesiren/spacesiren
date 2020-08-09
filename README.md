@@ -55,8 +55,8 @@ Special thanks to:
 
 1. While SpaceSiren was designed to run as cheaply as possible, even for
    individuals, it will not be entirely free of operating costs. You will incur
-   nominal costs for DynamoDB, Lambda, API Gateway, and perhaps CloudTrail,
-   depending on your configuration. You should expect to spend between $1 and $5
-   per month to run SpaceSiren. Of course, the project's maintainers are not
-   responsible for any actual costs you incur. Please closely monitor your AWS
-   bill while it is in use. 
+   nominal costs for DynamoDB, Lambda, API Gateway, Route 53, and perhaps
+   CloudTrail, depending on your configuration. You should expect to spend
+   between $1 and $5 per month to run SpaceSiren. Of course, the project's
+   maintainers are not responsible for any actual costs you incur. Please closely
+   monitor your AWS bill while it is in use. 
