@@ -3,4 +3,4 @@
 functions-pkg/
 venv/
 terraform.tfvars
-terraform-backend.tf
+terraform-local.tf

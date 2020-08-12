@@ -1,3 +1,6 @@
+# Backend and AWS provider settings are in terraform-local.tf.example.
+# Copy that file to terraform-local.tf.
+
 terraform {
   required_version = ">= 0.13"
 
@@ -15,9 +18,4 @@ terraform {
       version = "~> 2.3.0"
     }
   }
-}
-
-provider "aws" {
-  profile = "spacesiren"
-  region  = "us-east-1"
 }

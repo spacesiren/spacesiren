@@ -106,7 +106,7 @@ not incur any measurable cost.
 
 ### Terraform Backend
 
-Copy the `terraform-backend.tf.example` file to `terraform-backend.tf` and replace
+Copy the `terraform-local.tf.example` file to `terraform-local.tf` and replace
 the value for `bucket` with the name of your Terraform states bucket.
 
 ### Terraform Variables

@@ -1,3 +1,5 @@
+# This file is for local configuration of the Terraform backend and AWS provider.
+#
 # Backend configuration is optional, but highly recommended.
 #   1. Create a new S3 bucket in your SpaceSiren account in the us-east-1 region
 #      for the backend state and copy its name into the "bucket" config below.
@@ -6,7 +8,7 @@
 #      parameters on table creation are optional, but you shouldn't need more than 1
 #      provisioned capacity for read and write. On-demand will also work and shouldn't
 #      incur any measurable cost.
-#   3. Copy this file to "terraform-backend.tf" from its current directory and run
+#   3. Copy this file to "terraform-local.tf" from its current directory and run
 #      "terraform init".
 
 terraform {
@@ -18,4 +20,9 @@ terraform {
     encrypt        = "true"
     dynamodb_table = "spacesiren-terraform-lock"
   }
+}
+
+provider "aws" {
+  profile = "spacesiren"
+  region  = "us-east-1"
 }
