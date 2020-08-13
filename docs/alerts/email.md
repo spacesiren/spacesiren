@@ -2,7 +2,7 @@
 
 ← [Home](../../README.md) / [Alerts](../alerts.md)
 
-> ![Email alert](../screenshots/alert-email.png)
+> ![Email alert](../images/screenshots/alert-email.png)
 
 Email alerts will be sent to your inbox or distribution list. Options include:
 

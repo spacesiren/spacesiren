@@ -2,7 +2,7 @@
 
 ← [Home](../../README.md) / [Alerts](../alerts.md)
 
-> ![PagerDuty alert](../screenshots/alert-pagerduty.png)
+> ![PagerDuty alert](../images/screenshots/alert-pagerduty.png)
 
 Alerts can also be sent to PagerDuty to notify your on-call personnel.
 

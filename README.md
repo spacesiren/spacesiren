@@ -5,7 +5,9 @@ manager and alert system for AWS. With this fully serverless application,
 you can create and manage honey tokens at scale -- up to 10,000 per SpaceSiren
 instance -- at close to no cost.<sup>1</sup>
 
-![Token API screenshot](docs/screenshots/token-api.png)
+![SpaceSiren mascot](docs/images/logo/spacesiren-banner-medium.png)
+
+![Token API screenshot](docs/images/screenshots/token-api.png)
 
 Supported alert outputs include:
 
@@ -47,6 +49,8 @@ Special thanks to:
 * Atlassian for [Project SpaceCrab](https://bitbucket.org/asecurityteam/spacecrab), the
   inspiration for this project. If you want to read about why I started SpaceSiren,
   please see my [SpaceCrab critique](docs/spacecrab.md) page.
+* The wonderful and talented
+  [Alia Mancisidor](https://www.instagram.com/aliamancisidor/) for the artwork.
 * Anyone who volunteered to test this application for me.
 
 ---

@@ -2,7 +2,7 @@
 
 ← [Home](../../README.md) / [Alerts](../alerts.md)
 
-> ![PagerDuty alert](../screenshots/alert-slack.png)
+> ![PagerDuty alert](../images/screenshots/alert-slack.png)
 
 You can configure SpaceSiren to send alerts to an existing Slack channel using an
 Incoming Webhook.
