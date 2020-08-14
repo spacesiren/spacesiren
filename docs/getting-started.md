@@ -104,6 +104,8 @@ not incur any measurable cost.
 
 ## Configuration
 
+**Switch to the `terraform/` directory for the Configuration and Run steps.
+
 ### Terraform Backend
 
 Copy the `terraform-local.tf.example` file to `terraform-local.tf` and replace
@@ -153,7 +155,7 @@ alert_email_from_user  = "alerts"
 alert_email_to_address = "security@example.com"
 ```
 
-Alert email messages will come from `alerts@spacesiren.example.com` and be sent
+Alert email messages would come from `alerts@spacesiren.example.com` and be sent
 to `security@example.com`.
 
 ## Run
