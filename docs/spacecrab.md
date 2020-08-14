@@ -4,23 +4,24 @@
 
 After seeing SpaceSiren, you may remember a similar project called
 "[SpaceCrab](https://bitbucket.org/asecurityteam/spacecrab/src/master/)" from
-Atlassian. I'll admit that this project was heavily inspired by SpaceCrab.
+Atlassian. This project was heavily inspired by SpaceCrab.
 
 While I love the idea of SpaceCrab, there were a few issues with it that I
 found difficult to get past. Namely...
 
 * It's written in Python 2, a language that is now end-of-life and was already
   nearing deprecation when the project began.
-* It uses AWS CloudFormation to provision the stack. The documentation even
-  admits that it may fail randomly for no reason. Plus I'm more fond of Terraform
-  just out of personal preference.
+* It uses AWS CloudFormation to provision the stack, which can be shaky when
+  using nested templates. The SpaceCrab documentation even admits that it may
+  fail randomly for no reason. Plus I'm more fond of Terraform just out of
+  personal preference.
 * It requires an RDS instance and a VPC NAT Gateway to operate. While that may
   be a drop in the bucket for most businesses, it's expensive for an individual
   to run on their own.
 * Lack of alert integration options; only sends to email and PagerDuty.
 * Each individual action performed with a honey token triggers its own alert.
-  If an attacker attempts 5 actions, you will receive 5 emails or PagerDuty
-  alerts.
+  If an attacker attempts 5 actions, you will receive 5 separate emails or
+  PagerDuty alerts.
 * The project was active for only a year and has had no substantial commits
   within the last two years as of this writing.
 
