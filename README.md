@@ -42,6 +42,15 @@ foundational tools and knowledge, mainly in AWS and Terraform.
 * Basic AWS Organizations and IAM Roles for cross-account access
 * Intermediate DNS (delegating a (sub)domain with NS records)
 
+## Contact
+
+If you notice a critical security bug (e.g., one that would grant real access to
+an AWS account), please responsibly disclose it via email at
+[contact@spacesiren.io](mailto:contact@spacesiren.io).
+
+For standard bugs or feature requests, please open a GitHub issue.
+
+
 ## Attributions
 
 Special thanks to:
