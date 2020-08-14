@@ -1,19 +1,19 @@
 data "archive_file" "this" {
   type        = "zip"
-  output_path = "${path.module}/../../functions-pkg/${local.filename}.zip"
+  output_path = "${local.pkg_path}/${local.filename}.zip"
 
   source {
-    content  = file("${path.module}/../../functions-src/app_common.py")
+    content  = file("${local.src_path}/app_common.py")
     filename = "app_common.py"
   }
 
   source {
-    content  = file("${path.module}/../../functions-src/${var.type}_common.py")
+    content  = file("${local.src_path}/${var.type}_common.py")
     filename = "${var.type}_common.py"
   }
 
   source {
-    content  = file("${path.module}/../../functions-src/${local.filename}.py")
+    content  = file("${local.src_path}/${local.filename}.py")
     filename = "${local.filename}.py"
   }
 }

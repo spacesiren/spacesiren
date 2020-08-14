@@ -54,4 +54,6 @@ variable "tags" {
 
 locals {
   filename = join("_", [var.type, replace(var.name, "-", "_")])
+  src_path = "${path.module}/../../../functions/src"
+  pkg_path = "${path.module}/../../../functions/pkg"
 }

@@ -1,6 +1,6 @@
 .idea/
-.terraform/
-functions-pkg/
+functions/pkg/
+terraform/.terraform/
+terraform/terraform.tfvars
+terraform/terraform-local.tf
 venv/
-terraform.tfvars
-terraform-local.tf
