@@ -26,7 +26,7 @@ def get_ssm_parameter(name):
     )['Parameter']['Value']
 
 
-def get_alert_html(message):
+def get_alert_body(message):
     return \
         "An AWS honey token was used. " + \
         "It may have been publicly exposed or its location compromised.\n\n" + \
@@ -58,7 +58,7 @@ def main(event, _context):
         payload = {
             'token': pushover_keys['api'],
             'user': pushover_keys['user'],
-            'message': get_alert_html(message),
+            'message': get_alert_body(message),
             'html': 1,
             'priority': priority
         }
