@@ -14,6 +14,7 @@ Supported alert outputs include:
 * Email
 * PagerDuty
 * Slack
+* Pushover
 
 ## Documentation Pages
 
