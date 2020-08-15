@@ -65,7 +65,7 @@ resource "aws_acm_certificate_validation" "api" {
 }
 
 resource "aws_apigatewayv2_domain_name" "this" {
-  domain_name = "api.${trimsuffix(data.aws_route53_zone.this.name, ".")}"
+  domain_name = "api.${data.aws_route53_zone.this.name}"
 
   domain_name_configuration {
     certificate_arn = aws_acm_certificate_validation.api.certificate_arn

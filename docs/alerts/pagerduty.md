@@ -4,7 +4,7 @@
 
 > ![PagerDuty alert](../images/screenshots/alert-pagerduty.png)
 
-Alerts can also be sent to PagerDuty to notify your on-call personnel.
+Alerts can be sent to PagerDuty to notify your on-call personnel.
 
 You will need to have a PagerDuty account and set up a new service integration
 of type "**Events API v2**". Once you have the integration key, you may configure

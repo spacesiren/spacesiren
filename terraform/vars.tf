@@ -56,6 +56,61 @@ variable "alert_slack_webhook_url" {
   default     = ""
 }
 
+# Pushover
+variable "alert_pushover_user_key" {
+  description = "User or group key for Pushover alerts."
+  type        = string
+  default     = ""
+}
+
+variable "alert_pushover_api_key" {
+  description = "API (application) key for Pushover alerts."
+  type        = string
+  default     = ""
+}
+
+variable "alert_pushover_priority" {
+  description = "Priority level for Pushover alerts. -2 = lowest, 2 = highest."
+  type        = number
+  default     = 0
+
+  validation {
+    condition = (
+      var.alert_pushover_priority >= -2 &&
+      var.alert_pushover_priority <= 2
+    )
+    error_message = "The value for alert_pushover_priority must be between -2 and 2."
+  }
+}
+
+variable "alert_pushover_emergency_retry" {
+  description = "Interval in seconds to retry an emergency (priority 2) notification for Pushover alerts."
+  type        = number
+  default     = 300
+
+  validation {
+    condition = (
+      var.alert_pushover_emergency_retry >= 30 &&
+      var.alert_pushover_emergency_retry <= 10800
+    )
+    error_message = "The value for alert_pushover_emergency_retry must be between 30 and 10800."
+  }
+}
+
+variable "alert_pushover_emergency_expire" {
+  description = "Time in seconds to stop retrying an emergency (priority 2) notification for Pushover alerts."
+  type        = number
+  default     = 10800
+
+  validation {
+    condition = (
+      var.alert_pushover_emergency_expire >= 0 &&
+      var.alert_pushover_emergency_expire <= 10800
+    )
+    error_message = "The value for alert_pushover_emergency_expire must be between 0 and 10800."
+  }
+}
+
 #================================================
 # Optional
 #================================================

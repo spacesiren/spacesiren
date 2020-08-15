@@ -55,6 +55,16 @@ To enable or disable a specific alert type, set or unset its required variables.
 |----------------------------|--------|-----------|---------|-------------|
 | `alert_slack_webhoook_url` | string | Yes       | -       | Your Slack Incoming Webhook URL. |
 
+### Pushover
+
+| Variable                          | Type   | Required? | Default | Description |
+|-----------------------------------|--------|-----------|---------|-------------|
+| `alert_pushover_user_key`         | string | Yes       | -       | Your Pushover user or group key. |
+| `alert_pushover_api_key`          | string | Yes       | -       | Your Pushover API (application) key. |
+| `alert_pushover_priority`         | string | No        | 0       | The priority of the Pushover notification. -2 is the lowest and 2 is the highest. |
+| `alert_pushover_emergency_retry`  | string | No        | 300     | If priority=2, how often in seconds to retry notification. |
+| `alert_pushover_emergency_expire` | string | Yes       | 10800   | If priority=2, after how long in seconds to stop retrying. |
+
 ## Optional Variables
 
 These optional variables may be configured if you would like to tweak your

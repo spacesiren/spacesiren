@@ -1,3 +1,13 @@
+# 1.2.0 (Unreleased)
+
+FEATURES:
+
+* Pushover support. New tfvars are `alert_pushover_user_key` and `alert_pushover_api_key`.
+
+IMPROVEMENTS:
+
+* Remove `trimsuffix` from Route 53 zone name.
+
 # 1.1.0 (August 13, 2020)
 
 IMPROVEMENTS:

@@ -8,10 +8,13 @@ locals {
   email_verify_to   = length(var.alert_email_from_user) > 0 && length(var.alert_email_to_address) > 0 && var.alert_email_verify_to_address ? 1 : 0
   pagerduty_enabled = length(var.alert_pagerduty_integration_key) > 0 ? 1 : 0
   slack_enabled     = length(var.alert_slack_webhook_url) > 0 ? 1 : 0
+  pushover_enabled  = length(var.alert_pushover_user_key) > 0 && length(var.alert_pushover_api_key) > 0 ? 1 : 0
 
-  # Strings
-  email_from_domain  = trimsuffix(data.aws_route53_zone.this.name, ".")
-  email_from_address = "${var.alert_email_from_user}@${trimsuffix(data.aws_route53_zone.this.name, ".")}"
+  # Vars
+  email_from_domain  = data.aws_route53_zone.this.name
+  email_from_address = "${var.alert_email_from_user}@${data.aws_route53_zone.this.name}"
+
+  pushover_priority = var.alert_pushover_priority > 0 ? floor(var.alert_pushover_priority) : ceil(var.alert_pushover_priority)
 }
 
 #================================================
@@ -159,6 +162,62 @@ module "alert_slack_function" {
 
   environment = {
     SSM_PATH_SLACK_WEBHOOK_URL = aws_ssm_parameter.alert_slack_webhook[count.index].name
+  }
+
+  app_name               = var.app_name
+  cloudwatch_expire_days = var.cloudwatch_expire_days
+  functions_bucket       = data.aws_s3_bucket.functions.id
+  lambda_role_policy     = data.aws_iam_policy_document.lambda_assume_role_policy.json
+  sns_topic_arn          = aws_sns_topic.alert_honey_token_event.arn
+  tags                   = var.default_tags
+}
+
+#================================================
+# Pushover
+#================================================
+resource "aws_ssm_parameter" "alert_pushover_user_key" {
+  count       = local.pushover_enabled
+  name        = "/${var.app_name}/alert/pushover/user_key"
+  description = "Pushover user or group key."
+  type        = "SecureString"
+  value       = var.alert_pushover_user_key
+}
+
+resource "aws_ssm_parameter" "alert_pushover_api_key" {
+  count       = local.pushover_enabled
+  name        = "/${var.app_name}/alert/pushover/group_key"
+  description = "Pushover API key."
+  type        = "SecureString"
+  value       = var.alert_pushover_api_key
+}
+
+data "aws_iam_policy_document" "alert_pushover_function" {
+  count = local.pushover_enabled
+  statement {
+    effect  = "Allow"
+    actions = ["ssm:GetParameter"]
+
+    resources = [
+      aws_ssm_parameter.alert_pushover_user_key[count.index].arn,
+      aws_ssm_parameter.alert_pushover_api_key[count.index].arn
+    ]
+  }
+}
+
+module "alert_pushover_function" {
+  count  = local.pushover_enabled
+  source = "./modules/alert-function"
+
+  name        = "pushover"
+  description = "Handles outgoing alerts for Pushover."
+  policy_json = data.aws_iam_policy_document.alert_pushover_function[count.index].json
+
+  environment = {
+    SSM_PATH_PUSHOVER_USER_KEY = aws_ssm_parameter.alert_pushover_user_key[count.index].name
+    SSM_PATH_PUSHOVER_API_KEY  = aws_ssm_parameter.alert_pushover_api_key[count.index].name
+    PUSHOVER_PRIORITY          = local.pushover_priority
+    PUSHOVER_EMERGENCY_RETRY   = floor(var.alert_pushover_emergency_retry)
+    PUSHOVER_EMERGENCY_EXPIRE  = floor(var.alert_pushover_emergency_expire)
   }
 
   app_name               = var.app_name

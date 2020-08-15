@@ -7,6 +7,7 @@ Supported alert outputs include:
 * [Email](alerts/email.md)
 * [PagerDuty](alerts/pagerduty.md)
 * [Slack](alerts/slack.md)
+* [Pushover](alerts/pushover.md)
 
 You can alert to any combination of the supported outputs, but only one alert can
 be sent to each output type. For example, you can configure alerts to email and
