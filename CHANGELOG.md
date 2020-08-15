@@ -3,6 +3,7 @@
 FEATURES:
 
 * Pushover support. New tfvars are `alert_pushover_user_key` and `alert_pushover_api_key`.
+* Test alert API endpoint: `/test-alert`.
 
 IMPROVEMENTS:
 
