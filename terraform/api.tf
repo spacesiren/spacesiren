@@ -54,11 +54,6 @@ resource "aws_route53_record" "acm_validation_api" {
   allow_overwrite = true
 }
 
-//resource "aws_acm_certificate_validation" "api" {
-//  certificate_arn         = aws_acm_certificate.api.arn
-//  validation_record_fqdns = [aws_route53_record.acm_validation_api.fqdn]
-//}
-
 resource "aws_acm_certificate_validation" "api" {
   certificate_arn         = aws_acm_certificate.api.arn
   validation_record_fqdns = [for record in aws_route53_record.acm_validation_api : record.fqdn]
@@ -458,4 +453,87 @@ resource "aws_apigatewayv2_route" "api_event_get" {
   api_id    = aws_apigatewayv2_api.this.id
   route_key = "GET /event"
   target    = "integrations/${aws_apigatewayv2_integration.api_event.id}"
+}
+
+#================================================
+# Honey events API function and endpoints
+#================================================
+resource "aws_iam_role" "api_test_alert" {
+  name               = "${var.app_name}-lambda-api-test-alert"
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
+}
+
+data "aws_iam_policy_document" "lambda_function_api_test_alert" {
+  statement {
+    effect    = "Allow"
+    resources = [aws_dynamodb_table.api_keys.arn]
+
+    actions = [
+      "dynamodb:GetItem"
+    ]
+  }
+
+  statement {
+    effect    = "Allow"
+    actions   = ["sns:Publish"]
+    resources = [aws_sns_topic.alert_honey_token_event.arn]
+  }
+}
+
+resource "aws_iam_policy" "api_test_alert" {
+  name   = "${var.app_name}-lambda-api-test-alert"
+  policy = data.aws_iam_policy_document.lambda_function_api_test_alert.json
+}
+
+resource "aws_iam_role_policy_attachment" "api_test_alert" {
+  role       = aws_iam_role.api_test_alert.name
+  policy_arn = aws_iam_policy.api_test_alert.arn
+}
+
+module "lambda_function_api_test_alert" {
+  source = "./modules/lambda-function"
+
+  type             = "api"
+  name             = "test-alert"
+  description      = "Handles /test-alert API requests"
+  functions_bucket = data.aws_s3_bucket.functions.id
+  role_name        = aws_iam_role.api_test_alert.name
+  role_arn         = aws_iam_role.api_test_alert.arn
+  memory_size      = 256
+  timeout          = 60
+
+  environment = {
+    APP_NAME                  = var.app_name
+    HONEY_ALERT_SNS_TOPIC_ARN = aws_sns_topic.alert_honey_token_event.arn
+  }
+
+  app_name               = var.app_name
+  cloudwatch_expire_days = var.cloudwatch_expire_days
+  tags                   = var.default_tags
+}
+
+resource "aws_lambda_permission" "api_test_alert" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = module.lambda_function_api_test_alert.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.this.execution_arn}/*/*/test-alert"
+}
+
+resource "aws_apigatewayv2_integration" "api_test_alert" {
+  api_id                 = aws_apigatewayv2_api.this.id
+  integration_type       = "AWS_PROXY"
+  integration_method     = "POST"
+  integration_uri        = module.lambda_function_api_test_alert.invoke_arn
+  payload_format_version = "2.0"
+
+  lifecycle {
+    ignore_changes = [passthrough_behavior]
+  }
+}
+
+resource "aws_apigatewayv2_route" "api_test_alert_post" {
+  api_id    = aws_apigatewayv2_api.this.id
+  route_key = "POST /test-alert"
+  target    = "integrations/${aws_apigatewayv2_integration.api_test_alert.id}"
 }

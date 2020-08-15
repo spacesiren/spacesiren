@@ -492,7 +492,7 @@ OR
 
 *none*
 
-#### Response 
+#### Response
 
 ##### Single Event
 
@@ -531,5 +531,40 @@ OR
       "user_agent": "aws-cli/1.18.105 Python/3.8.2 Linux/5.4.0-40-generic botocore/1.17.28"
     }
   ]
+}
+```
+
+## Endpoint: /test-alert
+
+The `/test-alert` endpoint fires a test alert to configured outputs.
+
+**Admin required:** No
+
+### POST /test-alert
+
+Send a test alert.
+
+#### Request Options
+
+```json
+{
+  "description": "A token description"
+}
+```
+
+##### Required
+
+*none*
+  
+##### Optional
+
+* `description (str)`: The description of the would-be honey token that triggered
+  the alert. Helpful for describing your test alert to other recipients.
+
+#### Response
+
+```json
+{
+  "message": "Test alert sent."
 }
 ```
