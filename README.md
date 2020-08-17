@@ -7,9 +7,16 @@ instance -- at close to no cost.<sup>1</sup>
 
 ![SpaceSiren mascot](docs/images/logo/spacesiren-banner-medium.png)
 
-![Token API screenshot](docs/images/screenshots/token-api.png)
+## How it works
 
-> ![Email alert](docs/images/screenshots/alert-email.png)
+* It provides an an API Gateway to create no-permission AWS IAM users and access keys for those users.
+* You sprinkle the access keys wherever you like, for example in proprietary code or private data stores.
+* If one of those sources gets breached, an attacker is likely to use the stolen key to see what they can do with it.
+* You will receive an alert via email, PagerDuty, etc. that someone attempted to use the key.
+
+It's powered by Terraform, Lambda, Python 3, API Gateway, and DynamoDB.
+
+While the product itself is free and open source, you'll of course incur some AWS operating costs. However, it's designed to be run as cheaply as possible. Being completely serverless, you shouldn't be spending more than $1-$5 per month.
 
 Supported alert outputs include:
 
@@ -17,6 +24,10 @@ Supported alert outputs include:
 * PagerDuty
 * Slack
 * Pushover
+
+![Token API screenshot](docs/images/screenshots/token-api.png)
+
+> ![Email alert](docs/images/screenshots/alert-email.png)
 
 ## Documentation Pages
 
