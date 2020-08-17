@@ -9,6 +9,8 @@ instance -- at close to no cost.<sup>1</sup>
 
 ![Token API screenshot](docs/images/screenshots/token-api.png)
 
+> ![Email alert](docs/images/screenshots/alert-email.png)
+
 Supported alert outputs include:
 
 * Email
