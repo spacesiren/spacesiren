@@ -7,16 +7,14 @@ instance -- at close to no cost.<sup>1</sup>
 
 ![SpaceSiren mascot](docs/images/logo/spacesiren-banner-medium.png)
 
-## How it works
+## How It Works
 
-* It provides an an API Gateway to create no-permission AWS IAM users and access keys for those users.
+* It provides an API to create no-permission AWS IAM users and access keys for those users.
 * You sprinkle the access keys wherever you like, for example in proprietary code or private data stores.
 * If one of those sources gets breached, an attacker is likely to use the stolen key to see what they can do with it.
-* You will receive an alert via email, PagerDuty, etc. that someone attempted to use the key.
+* You will receive an alert that someone attempted to use the key.
 
-It's powered by Terraform, Lambda, Python 3, API Gateway, and DynamoDB.
-
-While the product itself is free and open source, you'll of course incur some AWS operating costs. However, it's designed to be run as cheaply as possible. Being completely serverless, you shouldn't be spending more than $1-$5 per month.
+SpaceSiren is powered by Terraform, Lambda, Python 3, API Gateway, and DynamoDB.
 
 Supported alert outputs include:
 
