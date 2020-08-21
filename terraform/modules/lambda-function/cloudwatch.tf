@@ -6,7 +6,7 @@ resource "aws_cloudwatch_log_group" "this" {
 data "aws_iam_policy_document" "cloudwatch" {
   statement {
     effect    = "Allow"
-    resources = [aws_cloudwatch_log_group.this.arn]
+    resources = ["${aws_cloudwatch_log_group.this.arn}:*"]
 
     actions = [
       "logs:CreateLogStream",
