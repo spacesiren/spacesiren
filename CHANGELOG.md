@@ -1,3 +1,9 @@
+# 1.2.1 (Unreleased)
+
+BUG FIXES:
+
+* Lambda logging permissions with the new aws_cloudwatch_log_group ARN format.
+
 # 1.2.0 (August 15, 2020)
 
 FEATURES:
