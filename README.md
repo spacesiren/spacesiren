@@ -9,21 +9,19 @@ instance -- at close to no cost.<sup>1</sup>
 
 ## How It Works
 
-* It provides an API to create no-permission AWS IAM users and access keys for those users.
+* SpaceSiren provides an API to create no-permission AWS IAM users and access keys for those users.
 * You sprinkle the access keys wherever you like, for example in proprietary code or private data stores.
 * If one of those sources gets breached, an attacker is likely to use the stolen key to see what they can do with it.
 * You will receive an alert that someone attempted to use the key.
 
-SpaceSiren is powered by Terraform, Lambda, Python 3, API Gateway, and DynamoDB.
+![Token API screenshot](docs/images/screenshots/token-api.png)
 
-Supported alert outputs include:
+## Alert Outputs
 
 * Email
 * PagerDuty
 * Slack
 * Pushover
-
-![Token API screenshot](docs/images/screenshots/token-api.png)
 
 > ![Email alert](docs/images/screenshots/alert-email.png)
 

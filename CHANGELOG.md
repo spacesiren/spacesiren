@@ -1,5 +1,9 @@
 # 1.2.1 (Unreleased)
 
+IMPROVEMENTS:
+
+* Update AWS provider to 3.3.0.
+
 BUG FIXES:
 
 * Lambda logging permissions with the new aws_cloudwatch_log_group ARN format.

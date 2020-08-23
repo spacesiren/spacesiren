@@ -456,7 +456,7 @@ resource "aws_apigatewayv2_route" "api_event_get" {
 }
 
 #================================================
-# Honey events API function and endpoints
+# Test alert API function and endpoints
 #================================================
 resource "aws_iam_role" "api_test_alert" {
   name               = "${var.app_name}-lambda-api-test-alert"
