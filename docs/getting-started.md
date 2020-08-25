@@ -104,7 +104,7 @@ not incur any measurable cost.
 
 ## Configuration
 
-**Switch to the `terraform/` directory for the Configuration and Run steps.
+**Switch to the `terraform/` directory for the Configuration and Run steps.**
 
 ### Terraform Backend
 
@@ -245,7 +245,7 @@ Set the request headers again, but instead of using the Provision Key like last
 time, use your authentication key pair.
 
 ```http request
-Content-Type: json
+Content-Type: application/json
 X-Key-ID: 59ee279b-941b-4312-89c4-35030caba89a
 X-Secret-ID: LiNasGp5g8hgNo0GvebYnNyqLJ50bMqSLYe97jdjsWw=
 ```
