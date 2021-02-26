@@ -1,3 +1,12 @@
+# 1.3.0 (Unreleased)
+
+IMPROVEMENTS:
+
+* Update Terraform to 0.15.
+* Update AWS provider to 3.29.1.
+* Update Archive provider to 2.1.0.
+* Update Random provider to 3.1.0.
+
 # 1.2.1 (August 22, 2020)
 
 IMPROVEMENTS:
