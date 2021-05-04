@@ -69,7 +69,7 @@ Special thanks to:
   inspiration for this project. If you want to read about why I started SpaceSiren,
   please see my [SpaceCrab critique](docs/spacecrab.md) page.
 * The wonderful and talented
-  [Alia Mancisidor](https://www.instagram.com/aliamancisidor/) for the artwork.
+  [Alia Mancisidor](https://www.instagram.com/figmentpie/) for the artwork.
 * Anyone who volunteered to test this application for me.
 
 ---
