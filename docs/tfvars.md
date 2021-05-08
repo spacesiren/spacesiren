@@ -38,7 +38,7 @@ To enable or disable a specific alert type, set or unset its required variables.
 
 | Variable                        | Type   | Required? | Default           | Description |
 |---------------------------------|--------|-----------|-------------------|-------------|
-| `alerte_amil_to_address`        | string | Yes       | -                 | The full TO email address of where alerts should be sent. |
+| `alert_email_to_address`        | string | Yes       | -                 | The full TO email address of where alerts should be sent. |
 | `alert_email_from_user`         | string | Yes       | -                 | The username of the FROM address, NOT the full email address. The domain of the address will be set by your `dns_zone_name` variable. |
 | `alert_email_from_display`      | string | No        | SpaceSiren Alerts | The display name of the FROM address. |
 | `alert_email_verify_to_address` | bool   | No        | true              | Attempt SES verification of the TO address. This will be mandatory for AWS accounts that have not been granted production SES access by AWS support. |
