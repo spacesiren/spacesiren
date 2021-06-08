@@ -1,6 +1,8 @@
 # Getting Started
 
-← [Home](../README.md)
+* [Alerts](alerts.md)
+* [API Documentation](api.md)
+* [Terraform Variables](tfvars.md)
 
 Unfortunately, there is no "quick start". Please read and follow each step carefully.
 I promise it'll be worth it or your money back.<sup>1</sup>

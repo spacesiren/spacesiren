@@ -1,7 +1,5 @@
 # Alerts
 
-← [Home](../README.md)
-
 Supported alert outputs include:
 
 * [Email](alerts/email.md)

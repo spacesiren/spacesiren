@@ -1,7 +1,5 @@
 # SpaceCrab Critique
 
-← [Home](../README.md)
-
 After seeing SpaceSiren, you may remember a similar project called
 "[SpaceCrab](https://bitbucket.org/asecurityteam/spacecrab/src/master/)" from
 Atlassian. This project was heavily inspired by SpaceCrab.

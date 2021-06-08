@@ -1,7 +1,5 @@
 # Terraform Variables
 
-← [Home](../README.md)
-
 The `terraform.tfvars` file contains SpaceSiren's configuration.
 
 ## Applying
