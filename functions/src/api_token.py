@@ -98,8 +98,7 @@ def main(event, _context):
     headers = event.get('headers', {})
 
     # Authentication
-    auth = api_common.authenticate_user(
-        current_time, headers.get('x-key-id'), headers.get('x-secret-id'))
+    auth = api_common.authenticate_user(current_time, headers.get('x-key-id'), headers.get('x-secret-id'))
     if not auth['auth']:
         return api_common.build_response(401, {'error': "Authentication failed."})
 
