@@ -1,6 +1,7 @@
 #================================================
 # Required
 #================================================
+
 variable "cloudtrail_bucket" {
   description = "S3 bucket for CloudTrail events."
 }
@@ -114,6 +115,7 @@ variable "alert_pushover_emergency_expire" {
 #================================================
 # Optional
 #================================================
+
 variable "alert_cooldown" {
   description = "How long to wait (in seconds) after an alert is triggered to trigger another if the honey token is still in use."
   type        = number

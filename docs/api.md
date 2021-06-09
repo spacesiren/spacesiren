@@ -1,7 +1,5 @@
 # API Documentation
 
-← [Home](../README.md)
-
 While SpaceSiren doesn't have a pretty frontend (yet), you can use the API to
 create and manage tokens and authentication keys, along with viewing events
 from honey tokens. You can interact with the API using your tool of choice,

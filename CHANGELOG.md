@@ -1,4 +1,10 @@
-# 1.3.0 (Unreleased)
+# 1.4.0 (Unreleased)
+
+IMPROVEMENTS:
+
+* Add support for monitoring of arbitrary resources (and actions) in any AWS account.
+
+# 1.3.0 (April 15, 2021)
 
 IMPROVEMENTS:
 

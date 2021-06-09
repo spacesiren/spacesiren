@@ -27,7 +27,7 @@ instance -- at close to no cost.<sup>1</sup>
 
 ## Documentation Pages
 
-* [Getting Started](docs/getting-started.md)
+* [Getting Started](docs/README.md)
 * [Alerts](docs/alerts.md)
 * [API Documentation](docs/api.md)
 * [Terraform Variables](docs/tfvars.md)

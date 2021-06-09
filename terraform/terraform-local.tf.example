@@ -1,6 +1,6 @@
 # This file is for local configuration of the Terraform backend and AWS provider.
 #
-# Backend configuration is optional, but highly recommended.
+# Backend configuration is optional, but highly recommended (see https://www.terraform.io/docs/language/settings/backends/index.html).
 #   1. Create a new S3 bucket in your SpaceSiren account in the us-east-1 region
 #      for the backend state and copy its name into the "bucket" config below.
 #   2. Create a new DynamoDB table in your SpaceSiren account in the us-east-1 region

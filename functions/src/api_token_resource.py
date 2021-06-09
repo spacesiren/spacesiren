@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Honey token management endpoints for the application API.
+Honey resource management endpoints for the application API.
 """
 
 import app_common
@@ -16,32 +16,37 @@ logger.setLevel(logging.INFO)
 current_time = int(time.time())
 
 
+# FIXME there's a lot of duplicated code with api_token.py, should use class inheritance
+
 def validate_input(event):
     api_common.check_request(event)
 
     body = json.loads(event.get('body', "{}"))
-    if not isinstance(body.get('access_key_id', ""), str):
-        raise Exception("Parameter 'access_key_id' must be of type string.")
+    if not isinstance(body.get('resource_arn', ""), str):
+        raise Exception("Parameter 'resource_arn' must be of type string.")
 
 
 def get_request(body):
-    if body.get('access_key_id'):
+    if body.get('resource_arn'):
         # Fetch single token
-        token = app_common.HoneyToken(body['access_key_id'])
+        token = app_common.HoneyResource(body['resource_arn'])
 
         if not token.exists:
-            return api_common.build_response(404, {'error': "Honey token not found."})
+            return api_common.build_response(404, {'error': "Honey resource not found."})
 
         return api_common.build_response(200, {'token': token.get_dict()})
 
     # Fetch all tokens
-    tokens = app_common.HoneyToken.get_all_tokens()
+    tokens = app_common.HoneyResource.get_all_tokens()
     response = {'count': len(tokens), 'tokens': tokens}
     return api_common.build_response(200, response)
 
 
 def post_request(body):
-    token = app_common.HoneyToken()
+    if 'resource_arn' not in body:
+        return api_common.build_response(400, {'error': "Parameter 'resource_arn' is required."})
+    
+    token = app_common.HoneyResource(body.get('resource_arn'))
 
     try:
         token.generate()
@@ -60,12 +65,12 @@ def post_request(body):
 
 
 def patch_request(body):
-    if 'access_key_id' not in body:
-        return api_common.build_response(400, {'error': "Parameter 'access_key_id' is required."})
+    if 'resource_arn' not in body:
+        return api_common.build_response(400, {'error': "Parameter 'resource_arn' is required."})
 
-    token = app_common.HoneyToken(body['access_key_id'])
+    token = app_common.HoneyResource(body['resource_arn'])
     if not token.exists:
-        return api_common.build_response(404, {'error': "Honey token not found."})
+        return api_common.build_response(404, {'error': "Honey resource not found."})
 
     if 'expire_time' in body:
         token.set_expire_time(body['expire_time'])
@@ -82,12 +87,12 @@ def patch_request(body):
 
 
 def delete_request(body):
-    if 'access_key_id' not in body:
-        return api_common.build_response(400, {'error': "Parameter 'access_key_id' is required."})
+    if 'resource_arn' not in body:
+        return api_common.build_response(400, {'error': "Parameter 'resource_arn' is required."})
 
-    token = app_common.HoneyToken(body['access_key_id'])
+    token = app_common.HoneyResource(body['resource_arn'])
     if not token.exists:
-        return api_common.build_response(404, {'error': "Honey token not found."})
+        return api_common.build_response(404, {'error': "Honey resource not found."})
 
     token.delete()
     return api_common.build_response(204)
