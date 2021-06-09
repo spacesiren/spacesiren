@@ -99,4 +99,20 @@ resource "aws_dynamodb_table" "honey_tokens" {
   tags = var.default_tags
 }
 
+resource "aws_dynamodb_table" "honey_resources" {
+  name         = "${var.app_name}-honey-resources"
+  hash_key     = "ResourceARN"
+  billing_mode = "PAY_PER_REQUEST"
+
+  attribute {
+    name = "ResourceARN"
+    type = "S"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+
+  tags = var.default_tags
+}
 
