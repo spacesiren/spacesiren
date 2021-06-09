@@ -377,8 +377,79 @@ class Event:
             self.__delete()
 
 
-class HoneyToken:
-    table = dynamodb.Table("{}-honey-tokens".format(os.environ['APP_NAME']))
+class Honey:
+
+    def __init__(self):
+        self.exists = False
+        self.create_time = None
+        self.expire_time = None
+        self.active = None
+        self.location = None
+        self.description = None
+
+    @classmethod
+    def get_all_tokens(cls):
+        pass
+
+    def __read(self):
+        pass
+
+    def __write(self):
+        pass
+
+    def __delete(self):
+        pass
+
+    def generate(self):
+        pass
+
+    def get_dict(self):
+        pass
+
+    def set_expire_time(self, expire_time=0):
+        try:
+            expire_time = max(0, int(expire_time))
+        except (ValueError, TypeError):
+            expire_time = 0
+
+        self.expire_time = expire_time
+
+    def set_active(self, active=None):
+        if active is None:
+            active = True
+
+        self.active = bool(active)
+
+    def set_location(self, location=""):
+        if not location:
+            location = ""
+
+        self.location = str(location)[:100].strip()
+
+    def set_description(self, description=""):
+        if not description:
+            description = ""
+
+        self.description = str(description)[:300].strip()
+
+    def save(self):
+        self.__write()
+
+    def delete(self):
+        pass
+
+class HoneyToken(Honey):
+    table = dynamodb.Table(f"{os.environ['APP_NAME']}-honey-tokens")
+
+    def __init__(self, access_key_id=None):
+        self.user = None
+        self.access_key_id = access_key_id
+        self.secret_access_key = None
+
+        if access_key_id:
+            self.__read()
+
+        super().__init__()
 
     @classmethod
     def get_all_tokens(cls):
@@ -403,36 +474,6 @@ class HoneyToken:
             })
 
         return tokens
-
-    # @classmethod
-    # def delete_expired_tokens(cls, current_time):
-    #     response = cls.table.scan(
-    #         IndexName='ExpireTime',
-    #         Select='ALL_PROJECTED_ATTRIBUTES',
-    #         FilterExpression="ExpireTime <= :expire0 and ExpireTime <> :expire1",
-    #         ExpressionAttributeValues={
-    #             ':expire0': current_time,
-    #             ':expire1': 0
-    #         }
-    #     )
-    #
-    #     for item in response.get('Items', []):
-    #         token = HoneyToken(item['AccessKeyID'])
-    #         token.delete()
-
-    def __init__(self, access_key_id=None):
-        self.exists = False
-        self.access_key_id = access_key_id
-        self.create_time = None
-        self.expire_time = None
-        self.user = None
-        self.secret_access_key = None
-        self.active = None
-        self.location = None
-        self.description = None
-
-        if access_key_id:
-            self.__read()
 
     def __read(self):
         response = self.table.get_item(Key={'AccessKeyID': self.access_key_id})
@@ -510,35 +551,6 @@ class HoneyToken:
             'description': self.description
         }
 
-    def set_expire_time(self, expire_time=0):
-        try:
-            expire_time = max(0, int(expire_time))
-        except (ValueError, TypeError):
-            expire_time = 0
-
-        self.expire_time = expire_time
-
-    def set_active(self, active=None):
-        if active is None:
-            active = True
-
-        self.active = bool(active)
-
-    def set_location(self, location=""):
-        if not location:
-            location = ""
-
-        self.location = str(location)[:100].strip()
-
-    def set_description(self, description=""):
-        if not description:
-            description = ""
-
-        self.description = str(description)[:300].strip()
-
-    def save(self):
-        self.__write()
-
     def delete(self):
         if self.exists:
             # Delete real IAM access key and decrement user token count in database.
@@ -550,6 +562,98 @@ class HoneyToken:
 
             self.__delete()
 
+class HoneyResource(Honey):
+    table = dynamodb.Table(f"{os.environ['APP_NAME']}-honey-resources")
+
+    def __init__(self, resource_arn):
+        self.resource_arn = resource_arn
+
+        super().__init__()
+
+    @classmethod
+    def get_all_tokens(cls):
+        response = cls.table.scan()
+        items = response.get('Items', [])
+
+        while response.get('LastEvaluatedKey') is not None:
+            response = cls.table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+            items.extend(response.get('Items', []))
+
+        tokens = []
+        for item in items:
+            tokens.append({
+                'resource_arn': item['ResourceARN'],
+                'create_time': int(item['CreateTime']),
+                'expire_time': int(item['ExpireTime']),
+                'active': bool(item['Active']),
+                'location': item['Location'],
+                'description': item['Description']
+            })
+
+        return tokens
+
+    def __read(self):
+        response = self.table.get_item(Key={'ResourceARN': self.resource_arn})
+
+        if 'Item' not in response:
+            return
+
+        item = response['Item']
+        self.exists = True
+        self.create_time = item.get('CreateTime', None)
+        self.expire_time = item.get('ExpireTime', None)
+        self.active = item.get('Active', None)
+        self.location = item.get('Location', None)
+        self.description = item.get('Description', None)
+
+    def __write(self):
+        self.table.put_item(Item={
+            'ResourceARN': self.resource_arn,
+            'CreateTime': self.create_time,
+            'ExpireTime': self.expire_time,
+            'Active': self.active,
+            'Location': self.location,
+            'Description': self.description
+        })
+        self.exists = True
+
+    def __delete(self):
+        self.table.delete_item(Key={'ResourceARN': self.resource_arn})
+        self.exists = False
+        self.create_time = None
+        self.expire_time = None
+        self.active = None
+        self.location = None
+        self.description = None
+
+    def generate(self):
+        # Set attrs
+        self.create_time = int(time.time())
+        self.set_expire_time()
+        self.set_active()
+        self.set_location()
+        self.set_description()
+
+        self.__write()
+
+    def get_dict(self):
+        return {
+            'resource_arn': self.resource_arn,
+            'create_time': int(self.create_time),
+            'expire_time': int(self.expire_time),
+            'active': bool(self.active),
+            'location': self.location,
+            'description': self.description
+        }
+
+    def delete(self):
+        if self.exists:
+
+            # FIXME support resources in events
+            # Scrub events table.
+            Event.delete_events_for_token(self.access_key_id)
+
+            self.__delete()
 
 class IAMUser:
     table = dynamodb.Table("{}-iam-users".format(os.environ['APP_NAME']))
