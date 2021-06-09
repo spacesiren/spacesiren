@@ -5,4 +5,5 @@ terraform/.terraform/
 terraform/.terraform.lock.hcl
 terraform/terraform.tfvars
 terraform/terraform-local.tf
+*.tfstate
 venv/
