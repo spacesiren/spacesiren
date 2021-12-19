@@ -1,4 +1,12 @@
-# 1.3.0 (Unreleased)
+# 1.4.0 (December 19, 2021)
+
+IMPROVEMENTS:
+
+* Update Terraform to 1.1.2.
+* Update AWS provider to 3.70.0.
+* Update Archive provider to 2.2.0.
+
+# 1.3.0 (April 14, 2021)
 
 IMPROVEMENTS:
 
